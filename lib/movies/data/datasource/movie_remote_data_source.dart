@@ -18,7 +18,7 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
   Future<List<MovieEntity>> getNowPlayingMovies() async {
     var data = await apiService.get(
         endPoint:
-            '/movie/now_playing?api_key=4d1044c950ee135ad26722c4bc2c90de');
+            '/movie/now_playing');
 
     List<MovieEntity> movies = getMovies(data);
 
@@ -26,15 +26,25 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
   }
 
   @override
-  Future<List<MovieEntity>> getPopularMovies() {
-    // TODO: implement getPopularMovies
-    throw UnimplementedError();
+  Future<List<MovieEntity>> getPopularMovies() async{
+    var data = await apiService.get(
+        endPoint:
+        '/movie/popular');
+
+    List<MovieEntity> movies = getMovies(data);
+
+    return movies;
   }
 
   @override
-  Future<List<MovieEntity>> getTopRatedMovies() {
-    // TODO: implement getTopRatedMovies
-    throw UnimplementedError();
+  Future<List<MovieEntity>> getTopRatedMovies() async{
+    var data = await apiService.get(
+        endPoint:
+        '/movie/top_rated');
+
+    List<MovieEntity> movies = getMovies(data);
+
+    return movies;
   }
 
   List<MovieEntity> getMovies(Map<String, dynamic> data) {
