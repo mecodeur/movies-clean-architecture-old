@@ -9,8 +9,15 @@ class MovieEntity extends Equatable {
   final double voteAverage;
   final String releaseDate;
 
-  MovieEntity(this.id, this.title, this.backdropPath, this.genreIds,
-      this.overview, this.voteAverage, this.releaseDate);
+  MovieEntity({
+    required this.id,
+    required this.title,
+    required this.backdropPath,
+    required this.genreIds,
+    required this.overview,
+    required this.voteAverage,
+    required this.releaseDate,
+  });
 
   @override
   List<Object> get props => [
