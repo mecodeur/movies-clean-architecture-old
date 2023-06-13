@@ -1,4 +1,5 @@
 import 'package:movies_clean_architecture/core/utils/api_service.dart';
+import 'package:movies_clean_architecture/movies/data/models/movie_model.dart';
 import 'package:movies_clean_architecture/movies/domain/entities/movie_entity.dart';
 
 abstract class BaseMovieRemoteDataSource {
@@ -19,10 +20,10 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
     var data = await apiService.get(
         endPoint:
             '/movie/now_playing');
-
     List<MovieEntity> movies = getMovies(data);
 
     return movies;
+
   }
 
   @override
@@ -50,7 +51,7 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
   List<MovieEntity> getMovies(Map<String, dynamic> data) {
     List<MovieEntity> movies = [];
     for (var movieMap in data['results']) {
-      movies.addAll(movieMap);
+      movies.add(MovieModel.fromJson(movieMap));
     }
     return movies;
   }
