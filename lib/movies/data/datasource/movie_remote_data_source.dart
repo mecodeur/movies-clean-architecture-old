@@ -20,8 +20,9 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
     var data = await apiService.get(
         endPoint:
             '/movie/now_playing');
-    List<MovieEntity> movies = getMovies(data);
 
+    List<MovieEntity> movies = getMovies(data);
+    //print('>>>>>>>>>>>>>>>>>>> ${movies}');
     return movies;
 
   }
