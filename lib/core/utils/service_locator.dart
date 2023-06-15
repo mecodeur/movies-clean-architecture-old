@@ -7,30 +7,14 @@ import '../../movies/data/repository/movies_repository.dart';
 
 final sl = GetIt.instance;
 
-class ServiceLocator{
-
+class ServiceLocator {
   void init() {
-    sl.registerSingleton<ApiService>(
-      ApiService(
-        Dio(),
-      ),
-    );
-    sl.registerSingleton<MoviesRepository>(
-      MoviesRepository(MovieRemoteDataSource(sl.get<ApiService>(),)),
-    );
+    sl.registerLazySingleton<ApiService>(() {
+      return ApiService(Dio());
+    });
 
-    // API SERVICE
-    //sl.registerSingleton<ApiService>(ApiService(Dio()));
-
-    // DATA SOURCE
-    //sl.registerSingleton<BaseMovieRemoteDataSource>(MovieRemoteDataSource(sl()));
-
-    // REPOSITORY
-    //sl.registerSingleton<BaseMoviesRepository>(MoviesRepository(sl()));
-
-    // Use cases
-    //sl.registerSingleton(GetNowPlayingMoviesUseCase(sl()));
-
+    sl.registerLazySingleton<MoviesRepository>(() {
+      return MoviesRepository(MovieRemoteDataSource(sl.get<ApiService>()));
+    });
   }
 }
-

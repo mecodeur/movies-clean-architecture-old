@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_now_playing_movies_usecase.dart';
 
+import '../../../../core/utils/service_locator.dart';
+import '../../../data/repository/movies_repository.dart';
 import '../../../domain/entities/movie_entity.dart';
 
 part 'movies_event.dart';
@@ -14,6 +16,8 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
 
   MoviesBloc(this.getNowPlayingMoviesUseCase) : super(MoviesInitial()) {
     on<GetNowPlayingMoviesEvent>((event, emit) async {
+
+      print('2 - Movies Repository Hash Code ====== ${sl<MoviesRepository>().hashCode}');
       emit(NowPlayingMoviesLoading());
 
      /* ApiService apiService = ApiService(Dio());
