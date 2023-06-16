@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_now_playing_movies_usecase.dart';
 
-import '../../../../core/utils/service_locator.dart';
 import '../../../domain/entities/movie_entity.dart';
 
 part 'movies_event.dart';
@@ -14,7 +13,6 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
 
   MoviesBloc(this.getNowPlayingMoviesUseCase) : super(MoviesInitial()) {
     on<GetNowPlayingMoviesEvent>((event, emit) async {
-      print('02 - Movies Bloc Hash Code ====== ${sl<MoviesBloc>().hashCode}');
 
       emit(NowPlayingMoviesLoading());
 
@@ -23,7 +21,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       MoviesRepository baseMoviesRepository = MoviesRepository(movieRemoteDataSource);*/
 
       final result = await getNowPlayingMoviesUseCase.execute();
-      print('My Result ====== ${result}');
+      //print('My Result ====== ${result}');
 
       result.fold((failure) {
         return emit(NowPlayingMoviesFailed(failure.message));
