@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_clean_architecture/movies/presentation/controller/movies_bloc/movies_bloc.dart';
-import 'package:movies_clean_architecture/movies/presentation/widgets/now_playing_movies_view.dart';
-import 'package:movies_clean_architecture/movies/presentation/widgets/popular_movies_view.dart';
-import 'package:movies_clean_architecture/movies/presentation/widgets/top_rated_movies_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/service_locator.dart';
+import '../components/now_playing_movies_view.dart';
+import '../components/popular_movies_view.dart';
+import '../components/top_rated_movies_view.dart';
 
 class MoviesScreen extends StatelessWidget {
   const MoviesScreen({Key? key}) : super(key: key);
