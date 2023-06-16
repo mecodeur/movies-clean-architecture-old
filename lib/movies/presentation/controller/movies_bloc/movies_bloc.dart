@@ -20,27 +20,26 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       this.getTopRatedMoviesUseCase)
       : super(MoviesState()) {
     on<GetNowPlayingMoviesEvent>((event, emit) async {
-      emit(MoviesState(nowPlayingMoviesState: RequestState.loading));
+      emit(state.copyWith(nowPlayingMoviesState: RequestState.loading));
 
       final result = await getNowPlayingMoviesUseCase.execute();
 
       result.fold((failure) {
-        return emit(MoviesState(nowPlayingMoviesState: RequestState.failed, nowPlayingMoviesErrorMessage: failure.message));
-        //return emit(NowPlayingMoviesFailed(failure.message));
+        return emit(state.copyWith(nowPlayingMoviesState: RequestState.failed, nowPlayingMoviesErrorMessage: failure.message));
       }, (movies) {
-        return emit(MoviesState(nowPlayingMoviesState: RequestState.success ,nowPlayingMovies: movies));
+        return emit(state.copyWith(nowPlayingMoviesState: RequestState.success, nowPlayingMovies: movies));
       });
     });
 
     on<GetPopularMoviesEvent>((event, emit) async {
-      emit(MoviesState(popularMoviesState: RequestState.loading));
+      emit(state.copyWith(popularMoviesState: RequestState.loading));
 
       final result = await getPopularMoviesUseCase.execute();
 
       result.fold((failure) {
-        return emit(MoviesState(popularMoviesState: RequestState.failed, popularMoviesErrorMessage: failure.message));
+        return emit(state.copyWith(popularMoviesState: RequestState.failed, popularMoviesErrorMessage: failure.message));
       }, (movies) {
-        return emit(MoviesState(popularMoviesState: RequestState.success, popularMovies: movies));
+        return emit(state.copyWith(popularMoviesState: RequestState.success, popularMovies: movies));
       });
     });
 
