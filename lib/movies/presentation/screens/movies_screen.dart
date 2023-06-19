@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_clean_architecture/movies/presentation/controller/movies_bloc/movies_bloc.dart';
@@ -12,6 +14,7 @@ class MoviesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('>>>>>>>>>>>>>>> Build');
     return BlocProvider(
       create: (context) => sl<MoviesBloc>()
         ..add(GetNowPlayingMoviesEvent())

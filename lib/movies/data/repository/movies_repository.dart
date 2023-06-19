@@ -13,8 +13,9 @@ class MoviesRepository implements BaseMoviesRepository {
   @override
   Future<Either<Failure, List<MovieEntity>>> getNowPlayingMovies() async {
     try {
-      List<MovieEntity> movies =
+      final List<MovieEntity> movies =
           await movieRemoteDataSource.getNowPlayingMovies();
+
       return right(movies);
     } catch (e) {
       if (e is DioError) {
@@ -27,7 +28,7 @@ class MoviesRepository implements BaseMoviesRepository {
   @override
   Future<Either<Failure, List<MovieEntity>>> getPopularMovies() async {
     try {
-      List<MovieEntity> movies = await movieRemoteDataSource.getPopularMovies();
+      final List<MovieEntity> movies = await movieRemoteDataSource.getPopularMovies();
       return right(movies);
     } catch (e) {
       if (e is DioError) {
@@ -40,7 +41,7 @@ class MoviesRepository implements BaseMoviesRepository {
   @override
   Future<Either<Failure, List<MovieEntity>>> getTopRatedMovies() async {
     try {
-      List<MovieEntity> movies =
+      final List<MovieEntity> movies =
           await movieRemoteDataSource.getTopRatedMovies();
       return right(movies);
     } catch (e) {

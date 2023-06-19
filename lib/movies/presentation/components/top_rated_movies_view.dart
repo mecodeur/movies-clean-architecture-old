@@ -14,8 +14,11 @@ class TopRatedMoviesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesBloc, MoviesState>(
+      buildWhen: (previous, current) {
+        return previous.topRatedMoviesState != current.topRatedMoviesState;
+      },
       builder: (context, state) {
-
+        //log('>>>>>>>>>>>>>>> Build Component : TopRatedMovies');
         switch(state.topRatedMoviesState){
           case RequestState.loading:
             return SizedBox(

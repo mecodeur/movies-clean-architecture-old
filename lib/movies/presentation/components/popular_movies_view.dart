@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +14,11 @@ class PopularMoviesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesBloc, MoviesState>(
+      buildWhen: (previous, current) {
+        return previous.popularMoviesState != current.popularMoviesState;
+      },
       builder: (context, state) {
-        log('-- Popular Movies -- : ${state}');
-
+        //log('>>>>>>>>>>>>>>> Build Component : PopularMovies');
         switch (state.popularMoviesState) {
           case RequestState.loading:
             return SizedBox(
