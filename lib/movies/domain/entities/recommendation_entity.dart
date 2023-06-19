@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class Recommendation extends Equatable {
+class RecommendationEntity extends Equatable {
   final String? backdropPath;
   final int id;
 
-  Recommendation({
+  RecommendationEntity({
     required this.backdropPath,
     required this.id,
   });
