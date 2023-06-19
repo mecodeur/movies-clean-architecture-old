@@ -21,7 +21,6 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
             '/movie/now_playing');
 
     List<MovieModel> movies = getMovies(data);
-    //print('>>>>>>>>>>>>>>>>>>> ${movies}');
     return movies;
 
   }
