@@ -1,13 +1,12 @@
 import 'package:movies_clean_architecture/core/utils/api_service.dart';
 import 'package:movies_clean_architecture/movies/data/models/movie_model.dart';
-import 'package:movies_clean_architecture/movies/domain/entities/movie_entity.dart';
 
 abstract class BaseMovieRemoteDataSource {
-  Future<List<MovieEntity>> getNowPlayingMovies();
+  Future<List<MovieModel>> getNowPlayingMovies();
 
-  Future<List<MovieEntity>> getPopularMovies();
+  Future<List<MovieModel>> getPopularMovies();
 
-  Future<List<MovieEntity>> getTopRatedMovies();
+  Future<List<MovieModel>> getTopRatedMovies();
 }
 
 class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
@@ -16,41 +15,41 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
   MovieRemoteDataSource(this.apiService);
 
   @override
-  Future<List<MovieEntity>> getNowPlayingMovies() async {
+  Future<List<MovieModel>> getNowPlayingMovies() async {
     var data = await apiService.get(
         endPoint:
             '/movie/now_playing');
 
-    List<MovieEntity> movies = getMovies(data);
+    List<MovieModel> movies = getMovies(data);
     //print('>>>>>>>>>>>>>>>>>>> ${movies}');
     return movies;
 
   }
 
   @override
-  Future<List<MovieEntity>> getPopularMovies() async{
+  Future<List<MovieModel>> getPopularMovies() async{
     var data = await apiService.get(
         endPoint:
         '/movie/popular');
 
-    List<MovieEntity> movies = getMovies(data);
+    List<MovieModel> movies = getMovies(data);
 
     return movies;
   }
 
   @override
-  Future<List<MovieEntity>> getTopRatedMovies() async{
+  Future<List<MovieModel>> getTopRatedMovies() async{
     var data = await apiService.get(
         endPoint:
         '/movie/top_rated');
 
-    List<MovieEntity> movies = getMovies(data);
+    List<MovieModel> movies = getMovies(data);
 
     return movies;
   }
 
-  List<MovieEntity> getMovies(Map<String, dynamic> data) {
-    List<MovieEntity> movies = [];
+  List<MovieModel> getMovies(Map<String, dynamic> data) {
+    List<MovieModel> movies = [];
     for (var movieMap in data['results']) {
       movies.add(MovieModel.fromJson(movieMap));
     }
