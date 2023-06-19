@@ -1,5 +1,8 @@
 import 'package:movies_clean_architecture/core/utils/api_service.dart';
 import 'package:movies_clean_architecture/movies/data/models/movie_model.dart';
+import 'package:movies_clean_architecture/movies/domain/usecases/get_details_movie_usecase.dart';
+
+import '../models/movie_details_model.dart';
 
 abstract class BaseMovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
@@ -7,6 +10,8 @@ abstract class BaseMovieRemoteDataSource {
   Future<List<MovieModel>> getPopularMovies();
 
   Future<List<MovieModel>> getTopRatedMovies();
+
+  Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameters parameters);
 }
 
 class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
@@ -16,20 +21,15 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
-    var data = await apiService.get(
-        endPoint:
-            '/movie/now_playing');
+    var data = await apiService.get(endPoint: '/movie/now_playing');
 
     List<MovieModel> movies = getMovies(data);
     return movies;
-
   }
 
   @override
-  Future<List<MovieModel>> getPopularMovies() async{
-    var data = await apiService.get(
-        endPoint:
-        '/movie/popular');
+  Future<List<MovieModel>> getPopularMovies() async {
+    var data = await apiService.get(endPoint: '/movie/popular');
 
     List<MovieModel> movies = getMovies(data);
 
@@ -37,14 +37,21 @@ class MovieRemoteDataSource implements BaseMovieRemoteDataSource {
   }
 
   @override
-  Future<List<MovieModel>> getTopRatedMovies() async{
-    var data = await apiService.get(
-        endPoint:
-        '/movie/top_rated');
+  Future<List<MovieModel>> getTopRatedMovies() async {
+    var data = await apiService.get(endPoint: '/movie/top_rated');
 
     List<MovieModel> movies = getMovies(data);
 
     return movies;
+  }
+
+  @override
+  Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameters parameters) async {
+    var data = await apiService.get(endPoint: '/movie/${parameters.movieId}');
+
+    MovieDetailsModel movie = MovieDetailsModel.fromJson(data);
+
+    return movie;
   }
 
   List<MovieModel> getMovies(Map<String, dynamic> data) {
