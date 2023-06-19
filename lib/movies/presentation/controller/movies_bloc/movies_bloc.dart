@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movies_clean_architecture/core/utils/base_use_case.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_now_playing_movies_usecase.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_popular_movies_usecase.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_top_rated_movies_usecase.dart';
@@ -28,7 +29,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   }
 
   FutureOr<void> _getNowPlayingMovies(event, emit) async {
-    final result = await getNowPlayingMoviesUseCase();
+    final result = await getNowPlayingMoviesUseCase(NoParameters());
 
     result.fold((failure) {
       return emit(state.copyWith(
@@ -42,7 +43,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   }
 
   FutureOr<void> _getPopularMovies(event, emit) async {
-    final result = await getPopularMoviesUseCase();
+    final result = await getPopularMoviesUseCase(NoParameters());
 
     result.fold((failure) {
       return emit(state.copyWith(
@@ -55,7 +56,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   }
 
   FutureOr<void> _getTopRatedMovies(event, emit) async {
-    final result = await getTopRatedMoviesUseCase();
+    final result = await getTopRatedMoviesUseCase(NoParameters());
 
     result.fold((failure) {
       return emit(state.copyWith(
@@ -63,7 +64,8 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         topRatedMoviesErrorMessage: failure.message,
       ));
     }, (movies) {
-      return emit(state.copyWith(topRatedMoviesState: RequestState.success, topRatedMovies: movies));
+      return emit(state.copyWith(
+          topRatedMoviesState: RequestState.success, topRatedMovies: movies));
     });
   }
 }
