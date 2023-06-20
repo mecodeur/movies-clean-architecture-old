@@ -20,10 +20,11 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      sl<MovieDetailsBloc>()
-        ..add(GetMovieDetailsEvent(id))..add(GetMovieRecommendationEvent(id)),
-      child: Scaffold(
+      create: (BuildContext context) => sl<MovieDetailsBloc>()
+        ..add(GetMovieDetailsEvent(id))
+        ..add(GetMovieRecommendationEvent(id)),
+      lazy: false,
+      child: const Scaffold(
         body: MovieDetailContent(),
       ),
     );
@@ -38,6 +39,7 @@ class MovieDetailContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
       builder: (context, state) {
+        print('AAAAAAAAAAAAAAAA2');
         switch (state.movieDetailState) {
           case RequestState.loading:
             return SizedBox(

@@ -14,28 +14,29 @@ part 'movie_details_event.dart';
 part 'movie_details_state.dart';
 
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
-  final GetDetailsMovieUseCase getDetailsMovieUseCase;
-  final GetRecommendationMoviesUseCase getRecommendationMoviesUseCase;
 
-  MovieDetailsBloc(
-      this.getDetailsMovieUseCase, this.getRecommendationMoviesUseCase)
+  MovieDetailsBloc(this.getDetailsMovieUseCase,
+      this.getRecommendationMoviesUseCase)
       : super(MovieDetailsState()) {
     on<GetMovieDetailsEvent>(_getMovieDetails);
     on<GetMovieRecommendationEvent>(_getMovieRecommendation);
   }
 
-  FutureOr<void> _getMovieDetails(
-      GetMovieDetailsEvent event, Emitter<MovieDetailsState> emit) async {
+  final GetDetailsMovieUseCase getDetailsMovieUseCase;
+  final GetRecommendationMoviesUseCase getRecommendationMoviesUseCase;
+
+  FutureOr<void> _getMovieDetails(GetMovieDetailsEvent event,
+      Emitter<MovieDetailsState> emit) async {
     final result =
-        await getDetailsMovieUseCase(MovieDetailsParameters(movieId: event.id));
+    await getDetailsMovieUseCase(MovieDetailsParameters(movieId: event.id));
     result.fold((failure) {
       return emit(state.copyWith(
           movieDetailState: RequestState.loading,
           movieDetailsMessageError: failure.message));
     }, (movie) {
-      return emit(state.copyWith(
-          movieDetailState: RequestState.success, movieDetailsEntity: movie));
-    });
+      return emit(
+           state.copyWith(movieDetailState: RequestState.success, movieDetailsEntity: movie));
+          });
   }
 
   FutureOr<void> _getMovieRecommendation(GetMovieRecommendationEvent event,
