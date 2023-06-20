@@ -1,12 +1,12 @@
 part of 'movie_details_bloc.dart';
 
 class MovieDetailsState extends Equatable {
-  final MovieDetailsEntity? movieDetailsEntity;
+  final MovieDetailsEntity? movieDetails;
   final RequestState movieDetailState;
   final String movieDetailsMessageError;
 
   MovieDetailsState({
-    this.movieDetailsEntity,
+    this.movieDetails,
     this.movieDetailState = RequestState.loading,
     this.movieDetailsMessageError = '',
   });
@@ -16,7 +16,7 @@ class MovieDetailsState extends Equatable {
       RequestState? movieDetailState,
       String? movieDetailsMessageError}) {
     return MovieDetailsState(
-      movieDetailsEntity: movieDetailsEntity ?? this.movieDetailsEntity,
+      movieDetails: movieDetailsEntity ?? this.movieDetails,
       movieDetailState: movieDetailState ?? this.movieDetailState,
       movieDetailsMessageError:
           movieDetailsMessageError ?? this.movieDetailsMessageError,
@@ -25,7 +25,7 @@ class MovieDetailsState extends Equatable {
 
   @override
   List<Object?> get props => [
-        movieDetailsEntity,
+        movieDetails,
         movieDetailState,
         movieDetailsMessageError,
       ];
