@@ -21,7 +21,6 @@ class MoviesScreen extends StatelessWidget {
         ..add(GetPopularMoviesEvent())
         ..add(GetTopRatedMoviesEvent()),
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: SingleChildScrollView(
           key: const Key('movieScrollView'),
           child: Column(
