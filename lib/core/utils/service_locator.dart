@@ -5,6 +5,7 @@ import 'package:movies_clean_architecture/movies/data/datasource/movie_remote_da
 import 'package:movies_clean_architecture/movies/domain/usecases/get_details_movie_usecase.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_now_playing_movies_usecase.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_popular_movies_usecase.dart';
+import 'package:movies_clean_architecture/movies/domain/usecases/get_recommendation_movies_usecase.dart';
 import 'package:movies_clean_architecture/movies/domain/usecases/get_top_rated_movies_usecase.dart';
 import 'package:movies_clean_architecture/movies/presentation/controller/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_clean_architecture/movies/presentation/controller/movies_bloc/movies_bloc.dart';
@@ -15,7 +16,6 @@ final sl = GetIt.instance;
 
 class ServiceLocator {
   void init() {
-
     // API SERVICE
     sl.registerLazySingleton<ApiService>(() {
       return ApiService(Dio());
@@ -30,17 +30,18 @@ class ServiceLocator {
     sl.registerLazySingleton<GetNowPlayingMoviesUseCase>(() {
       return GetNowPlayingMoviesUseCase(sl.get<MoviesRepository>());
     });
-
     sl.registerLazySingleton<GetPopularMoviesUseCase>(() {
       return GetPopularMoviesUseCase(sl.get<MoviesRepository>());
     });
-
     sl.registerLazySingleton<GetTopRatedMoviesUseCase>(() {
       return GetTopRatedMoviesUseCase(sl.get<MoviesRepository>());
     });
 
     sl.registerLazySingleton<GetDetailsMovieUseCase>(() {
       return GetDetailsMovieUseCase(sl.get<MoviesRepository>());
+    });
+    sl.registerLazySingleton<GetRecommendationMoviesUseCase>(() {
+      return GetRecommendationMoviesUseCase(sl.get<MoviesRepository>());
     });
 
     // BLOC
@@ -55,8 +56,8 @@ class ServiceLocator {
     sl.registerLazySingleton(() {
       return MovieDetailsBloc(
         sl.get<GetDetailsMovieUseCase>(),
+        sl.get<GetRecommendationMoviesUseCase>(),
       );
     });
-
   }
 }

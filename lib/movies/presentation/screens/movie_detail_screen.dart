@@ -1,14 +1,17 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_clean_architecture/movies/domain/entities/genres.dart';
 import 'package:movies_clean_architecture/movies/domain/entities/movie_details_entity.dart';
 import 'package:movies_clean_architecture/movies/domain/entities/recommendation_entity.dart';
+import 'package:movies_clean_architecture/movies/presentation/controller/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_clean_architecture/movies/presentation/screens/dummy.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/utils/app_constant.dart';
+import '../../../core/utils/service_locator.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final int id;
@@ -17,10 +20,14 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MovieDetailContent(
-        movie: movieDetailDummy,
-        recommendations: recommendationDummy,
+    return BlocProvider(
+      create: (context) =>
+          sl<MovieDetailsBloc>()..add(GetMovieDetailsEvent(id)),
+      child: Scaffold(
+        body: MovieDetailContent(
+          movie: movieDetailDummy,
+          recommendations: recommendationDummy,
+        ),
       ),
     );
   }
@@ -225,7 +232,7 @@ class MovieDetailContent extends StatelessWidget {
   Widget _showRecommendations() {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-            (context, index) {
+        (context, index) {
           final recommendation = recommendations[index];
           return FadeInUp(
             from: 20,
@@ -233,7 +240,8 @@ class MovieDetailContent extends StatelessWidget {
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(4.0)),
               child: CachedNetworkImage(
-                imageUrl: AppConstant.imageUrl(recommendation.backdropPath!),//
+                imageUrl: AppConstant.imageUrl(recommendation.backdropPath!),
+                //
                 placeholder: (context, url) => Shimmer.fromColors(
                   baseColor: Colors.grey[850]!,
                   highlightColor: Colors.grey[800]!,

@@ -5,7 +5,7 @@ class RecommendationEntity extends Equatable {
   final int id;
 
   RecommendationEntity({
-    required this.backdropPath,
+     this.backdropPath,
     required this.id,
   });
 

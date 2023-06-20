@@ -21,7 +21,7 @@ class GetRecommendationMoviesUseCase
 class RecommendationParameters extends Equatable {
   final int id;
 
-  RecommendationParameters(this.id);
+  RecommendationParameters({required this.id});
 
   @override
   List<Object> get props => [id];
